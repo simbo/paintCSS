@@ -1,0 +1,16 @@
+{
+  "name": "paintCSS",
+  "version": "0.0.0",
+  "description": "",
+  "author": "Simon Lepel <simbo@simbo.de>",
+  "keywords": [],
+  "license": {
+    "type": "MIT",
+    "url": "http://simbo.mit-license.org/"
+  },
+  "private": true,
+  "ignore": [
+    "node_modules",
+    "bower_components"
+  ]
+}
