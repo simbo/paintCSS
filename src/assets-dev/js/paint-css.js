@@ -45,7 +45,7 @@
             this.setCanvasBorderColor(options.canvasBorderColor);
             this.setCanvasBorderWidth(options.canvasBorderWidth);
             this.setCanvasBorderStyle(options.canvasBorderStyle);
-            this.setMouseEvent();
+            this.setMouseEvents();
         },
 
         setPixelSize: function(pixelSize) {
@@ -88,7 +88,7 @@
             this.canvasOffset = offset;
         },
 
-        setMouseEvent: function() {
+        setMouseEvents: function() {
             this.getCanvasOffset();
             this.mouseDown = false;
             $(window).off('mouseup.paint').on({
@@ -99,11 +99,16 @@
             this.$canvas.off('mousedown.paint').on({
                 'mousedown.paint': function(ev) {
                     this.mouseDown = true;
+                    this.$canvas.trigger('mousemove.paint',[ev.pageX, ev.pageY]);
                 }.bind(this)
             });
             this.$canvas.off('mousemove.paint').on({
-                'mousemove.paint': function(ev) {
+                'mousemove.paint': function(ev, mouseDownX, mouseDownY) {
                     if (this.mouseDown) {
+                        if (mouseDownX && mouseDownY) {
+                            ev.pageX = mouseDownX;
+                            ev.pageY = mouseDownY;
+                        }
                         var x = Math.floor((ev.pageX - this.canvasOffset.left) / this.settings.pixelSize),
                             y = Math.floor((ev.pageY - this.canvasOffset.top) / this.settings.pixelSize);
                         if (x >= 0 && x < this.settings.canvasWidth && y >= 0 && y <= this.settings.canvasHeight) {
